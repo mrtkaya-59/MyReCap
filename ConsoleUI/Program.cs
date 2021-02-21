@@ -23,7 +23,8 @@ namespace ConsoleUI
 
             foreach (var car in carManager.GetCarDetailDtos())
             {
-                Console.WriteLine(car.CarName + "/" + car.BrandName);
+                Console.WriteLine(car.CarName + "//" + car.BrandName);
+
             }
 
            
