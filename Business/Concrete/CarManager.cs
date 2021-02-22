@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constans;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,40 +23,44 @@ namespace Business.Concrete
         {
             if (car.CarName.Length<2)
             {
-                return new ErrorResult("araç ismi en az 2 karakter olmalı");
+                return new ErrorResult(Messages.CarNameInvalid);
 
             }
             
             _carDal.Add(car);
 
-            return new SuccesResult("Araç eklendi");
+            return new SuccesResult(Messages.CarAdded);
         }
 
-        public List<Car> GetAll()
+        public IDataResult< List<Car>> GetAll()
         {
             // İş Kodları yazılır Buraya İş kodlarından geçtikten osnra veri erişim çağırmak gerek
-
-            return _carDal.GetAll();
+            if (DateTime.Now.Hour==22)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+                       
+            return new SuccessDataResult<List<Car>>( _carDal.GetAll(),Messages.Listed);
         }
 
-        public List<Car> GetAllByColorId(int colorId)
+        public IDataResult< List<Car>> GetAllByColorId(int colorId)
         {
-            return _carDal.GetAll(c => c.ColorId == colorId);
+            return new SuccessDataResult<List<Car>>( _carDal.GetAll(c => c.ColorId == colorId));
         }
 
-        public List<Car> GetByBrandId(int brandId)
+        public IDataResult< List<Car>> GetByBrandId(int brandId)
         {
-            return _carDal.GetAll(c=> c.BrandId==brandId);
+            return new SuccessDataResult<List<Car>>( _carDal.GetAll(c=> c.BrandId==brandId));
         }
 
-        public Car GetById(int carId)
+        public IDataResult< Car> GetById(int carId)
         {
-            return _carDal.Get(c=> c.CarId==carId);
+            return new SuccessDataResult<Car>( _carDal.Get(c=> c.CarId==carId));
         }
 
-        public List<CarDetailDto> GetCarDetailDtos()
+        public IDataResult < List<CarDetailDto>> GetCarDetailDtos()
         {
-            return _carDal.GetCarDetailDtos();
+            return new SuccessDataResult<List<CarDetailDto>>( _carDal.GetCarDetailDtos());
         }
     }
 }
