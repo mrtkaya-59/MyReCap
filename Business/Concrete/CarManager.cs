@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -16,7 +17,19 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-               
+
+        public IResult Add(Car car)
+        {
+            if (car.CarName.Length<2)
+            {
+                return new ErrorResult("araç ismi en az 2 karakter olmalı");
+
+            }
+            
+            _carDal.Add(car);
+
+            return new SuccesResult("Araç eklendi");
+        }
 
         public List<Car> GetAll()
         {
@@ -33,6 +46,11 @@ namespace Business.Concrete
         public List<Car> GetByBrandId(int brandId)
         {
             return _carDal.GetAll(c=> c.BrandId==brandId);
+        }
+
+        public Car GetById(int carId)
+        {
+            return _carDal.Get(c=> c.CarId==carId);
         }
 
         public List<CarDetailDto> GetCarDetailDtos()

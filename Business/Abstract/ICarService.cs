@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace Business.Abstract
         List<Car> GetAllByColorId(int colorId);
         List<Car> GetByBrandId(int brandId);
         List<CarDetailDto> GetCarDetailDtos();
+        IResult Add(Car car);
+        Car GetById(int carId);
 
     }
 }
