@@ -35,7 +35,7 @@ namespace Business.Concrete
         public IDataResult< List<Car>> GetAll()
         {
             // İş Kodları yazılır Buraya İş kodlarından geçtikten osnra veri erişim çağırmak gerek
-            if (DateTime.Now.Hour==22)
+            if (DateTime.Now.Hour==24)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
